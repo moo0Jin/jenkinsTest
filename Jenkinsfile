@@ -10,9 +10,9 @@ pipeline {
     // 파이프라인에서 사용할 환경변수
     environment {
       // aws cli등 사용할수 있게 쓰는 키 값
-      AWS_ACCESS_KEY_ID = credentials('awsAccessKeyId')
-      AWS_SECRET_ACCESS_KEY = credentials('awsSecretAccessKey')
-      AWS_DEFAULT_REGION = 'ap-northeast-2'
+      // AWS_ACCESS_KEY_ID = credentials('awsAccessKeyId')
+      // AWS_SECRET_ACCESS_KEY = credentials('awsSecretAccessKey')
+      // AWS_DEFAULT_REGION = 'ap-northeast-2'
       HOME = '.' // Avoid npm root owned
     }
     
@@ -144,7 +144,6 @@ pipeline {
 
             dir ('./server'){
                 sh '''
-                // docker rm -f $(docker ps -aq)
                 docker run -p 80:80 -d server
                 '''
             }
