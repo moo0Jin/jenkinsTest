@@ -1,18 +1,22 @@
 pipeline {
     // 스테이지 별로 다른 거
     agent any
-
+    
+    // git을 3분주기로 파이프라인을 구동하겠다는 트리거
     triggers {
         pollSCM('*/3 * * * *')
     }
 
+    // 파이프라인에서 사용할 환경변수
     environment {
+      // aws cli등 사용할수 있게 쓰는 키 값
       AWS_ACCESS_KEY_ID = credentials('awsAccessKeyId')
       AWS_SECRET_ACCESS_KEY = credentials('awsSecretAccessKey')
       AWS_DEFAULT_REGION = 'ap-northeast-2'
       HOME = '.' // Avoid npm root owned
     }
-
+    
+    // 큰 단계를 의미함
     stages {
         // 레포지토리를 다운로드 받음
         stage('Prepare') {
@@ -21,9 +25,9 @@ pipeline {
             steps {
                 echo 'Clonning Repository'
 
-                git url: 'https://github.com/frontalnh/temp.git',
+                git url: 'https://github.com/moo0Jin/jenkinsTest.git',
                     branch: 'master',
-                    credentialsId: 'jenkinsgit'
+                    credentialsId: 'jenkinsTest'
             }
 
             post {
@@ -140,7 +144,7 @@ pipeline {
 
             dir ('./server'){
                 sh '''
-                docker rm -f $(docker ps -aq)
+                // docker rm -f $(docker ps -aq)
                 docker run -p 80:80 -d server
                 '''
             }
